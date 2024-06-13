@@ -2,10 +2,12 @@ import React from 'react'
 
 export default function Header() {
   return (
-    <header>
+    <header className='header'>
         <span className='logo'>Converter</span>
-        <button className='logoutBtn'>Logout</button>
-        <button className='loginBtn'>Login</button>
+        <div className='login-block'>
+          <button className='sign-in-btn'>Sign in</button>
+          <button className='sign-up-btn'>Sign up</button>
+        </div>
     </header>
   )
 }
