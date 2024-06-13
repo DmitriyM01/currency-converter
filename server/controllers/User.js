@@ -1,40 +1,47 @@
-require('dotenv').config();
 const express = require('express');
-const { Router } = express;
+const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const pool = require('../db/connection');
 
-const router = Router();
+const JWT_SECRET = process.env.SECRET;
 
-const { SECRET = 'secret' } = process.env;
+router.post('/register', async (req, res) => {
+  const { username, email, password } = req.body;
 
-router.post('/signup', async (req, res) => {
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   try {
-    req.body.password = await bcrypt.hash(req.body.password, 10);
-    const user = await User.create(req.body);
-    res.json(user);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+    const newUser = await pool.query(
+      'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *',
+      [username, email, hashedPassword]
+    );
+    res.status(201).json(newUser.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
 router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const user = await User.findOne({ where: { username: req.body.username } });
-    if (user) {
-      const result = await bcrypt.compare(req.body.password, user.password);
-      if (result) {
-        const token = await jwt.sign({ username: user.username }, SECRET);
-        res.json({ token });
-      } else {
-        res.status(400).json({ error: 'Password does not match' });
-      }
-    } else {
-      res.status(400).json({ error: 'User does not exist' });
+    const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+
+    if (user.rows.length === 0) {
+      return res.status(400).json({ error: 'Invalid email or password' });
     }
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+
+    const validPassword = await bcrypt.compare(password, user.rows[0].password);
+
+    if (!validPassword) {
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+
+    const token = jwt.sign({ id: user.rows[0].id }, JWT_SECRET, { expiresIn: '1h' });
+    res.json({ token });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 

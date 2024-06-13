@@ -1,15 +1,11 @@
-require("dotenv").config()
-const mongoose = require("mongoose")
-const {log} = require("mercedlogger")
+const { Pool } = require('pg');
 
-mongoose.connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'currency',
+  password: 123123,
+  port: 5432,
 });
 
-mongoose.connection
-.on("open", () => log.green("DATABASE STATE", "Connection Open"))
-.on("close", () => log.magenta("DATABASE STATE", "Connection Open"))
-.on("error", (error) => log.red("DATABASE STATE", error))
-
-module.exports = mongoose
+module.exports = pool;

@@ -1,21 +1,16 @@
-require("dotenv").config()
-const express = require("express")
-const morgan = require("morgan")
-const {log} = require("mercedlogger")
-const cors = require("cors")
-const UserRouter = require("./controllers/User")
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3001;
+const authRoutes = require('./controllers/User');
 
-const {PORT = 5432} = process.env
+app.use(bodyParser.json());
+app.use('/auth', authRoutes);
 
-const app = express()
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
 
-app.use(cors())
-app.use(morgan("tiny"))
-app.use(express.json())
-
-app.get("/", (req, res) => {
-    res.send("this is the test route to make sure server is working")
-})
-app.use("/user", UserRouter)
-
-app.listen(PORT, () => log.green("SERVER STATUS", `Listening on port ${PORT}`))
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
