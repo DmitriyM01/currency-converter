@@ -9,6 +9,7 @@ export default function Header() {
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [data, setData] = useState({});
+  const [profileModal, setProfileModal] = useState(false);
 
   const changeModalActive = (type) => {
     setModalActive(true);
@@ -52,9 +53,8 @@ export default function Header() {
     e.preventDefault();
     e.stopPropagation();
 
-    console.log('dawdawdaw')
     try {
-      const response = await fetch('http://localhost:3001/auth/register', {
+      const response = await fetch(`http://localhost:3001/auth/` + (isSignInModal ? 'login' : 'register'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,10 +72,12 @@ export default function Header() {
       setUsername("");
       setPassword("");
       setEmail("");
-      sessionStorage.setItem('auth', loggedIn);
+      sessionStorage.setItem('auth', true);
+      setModalActive(false);
     } catch (error) {
       console.error(error);
       setLoggedIn(false);
+      sessionStorage.setItem('auth', false);
     }
   };
 
@@ -84,7 +86,11 @@ export default function Header() {
       <header style={{overflow: 'hidden'}} className='header'>
           <span className='logo'>Converter</span>
           <div className='login-block'>
-          {sessionStorage.getItem('auth') ? <span>{data.username}</span> : (
+          {sessionStorage.getItem('auth') === 'true' ? (
+            <button style={{borderRadius: '50%', outline: 'none', border: 'none', cursor: 'pointer', position: 'absolute', top: '-18px', right: '-54px'}} onClick={() => setProfileModal(true)}>
+              <img style={{width: '32px', height: '32px'}} src='user.png' />
+            </button>
+          ) : (
             <div>
               <button onClick={() => changeModalActive('signIn')} className='sign-in-btn'>Sign in</button>
               <button onClick={() => changeModalActive('pohuy')} className='sign-up-btn'>Sign up</button>
@@ -92,7 +98,8 @@ export default function Header() {
           )}
           </div>
       </header>
-      <Modal active={modalActive} setActive={setModalActive} >
+
+        <Modal active={modalActive} setActive={setModalActive}>
         <form onSubmit={handleSubmit}>
           <h1 style={{textAlign: 'center', marginBottom: '20px'}}>{isSignInModal ? 'Sign in' : 'Sign up'}</h1>
             {isSignInModal ? (
@@ -109,7 +116,17 @@ export default function Header() {
             )}
             <input style={buttonStyle} type="submit" value={isSignInModal ? 'Sign in' : 'Sign up'} />
         </form>
-      </Modal>
+      </Modal> 
+
+      {sessionStorage.getItem('auth') === 'true' && (
+        <Modal active={profileModal} setActive={setProfileModal}>
+          <div style={{display: 'flex', flexDirection: 'column', height: '300px'}}>
+            <h2 style={{marginBottom: '20px', fontSize: '32px'}}>name: {data.username}</h2>
+            <h2 style={{marginBottom: '20px', fontSize: '32px'}}>email: {data.email}</h2>
+            <button style={{width: '100%', height: '48px', fontWeight: 'bold', borderRadius: '5px', cursor: 'pointer', fontSize: '32px'}} onClick={() => {setProfileModal(false); setLoggedIn(false); sessionStorage.setItem('auth', false)}}>Log out</button>
+          </div>
+        </Modal>
+      )}
     </>
   )
 }
