@@ -17,39 +17,62 @@ body {
     margin-left: 4%;
     margin-right: 4%;
     background-color: #f4f4f4;
+    border-radius: 1cap;
 }
 
 .header {
-    border: black 1px solid;
-    position: relative;
+    background-color: #706e6e;
+    border-radius: 1cap 1cap 0 0;
     overflow: auto;
     display: flex;
     align-items: center;
-    height: 40px;
+    height: 60px;
+    position: relative;
 }
 
-span .logo {
+header .logo {
     font-weight: 600;
     font-size: 20px;
     float: left;
+    position: absolute;
+    left: 3%;
 }
 
-.login-block {
+header .login-block {
+    width: 10%;
     float: right;
     margin: 0.5%;
     white-space: nowrap;
     position: absolute;
-    right: 0;
+    right: 10%;
 }
 
 .sign-in-btn {
     cursor: pointer;
-    margin-right: 1%;
+    margin-right: 15%;
 }
 
 .sign-up-btn {
     cursor: pointer;
-    margin-left: 1%;
+    margin-left: 15%;
+}
+
+.sign-up-btn,
+.sign-in-btn {
+    color: #FFFFFF;
+    background-color: #26278D;
+    border: none;
+    border-radius: 1cap;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8% 15%;
+    transition: transform 500ms ease;
+}
+
+.sign-up-btn:hover,
+.sign-in-btn:hover {
+    background-color: red;
+    transform: scale(1.1);
 }
 
 .main-text {
@@ -59,7 +82,7 @@ span .logo {
 }
     
 .main-text h1 {
-    color: #1F2261;
+    color: #26278D;
 }
         
 .main-text p {
@@ -74,6 +97,101 @@ span .logo {
     border-radius: 3cap;
     margin: auto;
     margin-bottom: 30px;
+    position: relative;
+}
+
+.convert-btn {
+    background-color: #FFFFFF;
+    border-radius: 100%;
+    font-size: 40px;
+    color: #26278D;
+    position: absolute;
+    top: -0.7cap;
+    left: 45%;
+    z-index: 1;
+    cursor: pointer;
+    transition: transform 500ms ease;
+}
+
+.convert-btn:hover {
+    transform: scale(1.2);
+    color: #393ff3;
+}
+
+.amount-box,
+.converted-amount-box {
+    color: #989898;
+    font-size: large;
+    font-weight: 600;
+    position: relative;
+    left: 8%;
+}
+
+.amount-box {
+    top: 10%;
+}
+
+.converted-amount-box {
+    top: 50%
+}
+
+.current-convert-box,
+.converted-convert-box {
+    margin: auto;
+    width: 90%;
+    display: flex;
+}
+
+.current-convert-box {
+    position: absolute;
+    left: 5%;
+    top: 25%;
+}
+
+.converted-convert-box {
+    position: absolute;
+    left: 5%;
+    bottom: 20%;
+}
+
+.currency {
+    position: absolute;
+    left: 10%;
+}
+
+.count-money-box {
+    position: absolute;
+    right: 0;
+    right: 10%;
+}
+
+.line-between-currency {
+    width: 90%;
+    border: #d7d7de 1px solid;
+    position: absolute;
+    top: 50%;
+    right: 5%;
+}
+
+.result-box {
+    text-align: center;
+}
+
+.result-box h3 {
+    color: #9B9B9B;
+}
+
+.result-box div {
+    justify-content: center;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.result-box h2 {
+    padding: 0 1%;
+    width: auto;
+    border: #222 2px solid;
+    border-radius: 1cap;
 }
             
 .footer {
@@ -83,6 +201,7 @@ span .logo {
     justify-content: center;
     align-items: center;
     height: 200px;
+    border-radius: 0 0 1cap 1cap;
 }
 
 .footer-text a {
