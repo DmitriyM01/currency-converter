@@ -13,7 +13,7 @@ export default function ConvertBox({currentPairConvertation, countValute, setCou
         <div className="count-money-box">
           {setCountValute !== undefined ?
             <input onChange={({target: {value}}) => setCountValute(value)} className="count-money"></input>
-            : <div>{countValute * currentPairConvertation}</div>
+            : <div>{(countValute * currentPairConvertation).toFixed(2)}</div>
           }
             {/* <input onChange={({target: {value}}) => setCountValute(value)} className="count-money"></input> */}
         </div>
