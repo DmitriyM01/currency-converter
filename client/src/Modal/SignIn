@@ -1,0 +1,23 @@
+<Modal active={modalActive} setActive={setModalActive}>
+    <div class="conteiner">
+    <div class="form">
+    <h1>Sign in</h1>
+    <form>
+    <input
+    type="email"
+    required
+    placeholder="Емейл"
+    id="email"
+    class="input"
+    />
+    <input
+    type="password"
+    required
+    placeholder="Пароль"
+    id="pass1"
+    class="input"
+    />
+    </form>
+    </div>
+    </div>
+    </Modal>
