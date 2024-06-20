@@ -5,9 +5,9 @@ import React, { useState, useEffect } from 'react';
 
 function App() {
   const [currentValute, setCurrentValute] = useState('USD');
+  const [convertedValute, setConvertedValute] = useState('EUR');
   const [currentValue, setCurrentValue] = useState(1);
   const [countValute, setCountValute] = useState(1);
-  const [convertedValute, setConvertedValute] = useState('EUR');
   const [currentPairConvertation, setCurrentPairConvertation] = useState(0);
   const [supportedCodes, setSupportedCodes] = useState([]);
 
@@ -38,6 +38,13 @@ function App() {
         (result) => {
           setCurrentValute(valute);
           setCurrentPairConvertation(result.conversion_rate.toFixed(2));
+            fetch(`https://v6.exchangerate-api.com/v6/9b90c864809809361d5df968/pair/${currentValute}/${convertedValute}`)
+              .then(res => res.json())
+              .then(
+                (result) => {
+                  setCurrentPairConvertation(result.conversion_rate.toFixed(2));
+                },
+              )
         },
       )
   };
@@ -48,6 +55,18 @@ function App() {
       .then(
         (result) => {
           setConvertedValute(valute);
+          setCurrentPairConvertation(result.conversion_rate.toFixed(2));
+        },
+      )
+  }
+
+  const convertValutes = (current, converted) => {
+    setConvertedValute(current);
+    setCurrentValute(converted);
+    fetch(`https://v6.exchangerate-api.com/v6/9b90c864809809361d5df968/pair/${converted}/${current}`)
+      .then(res => res.json())
+      .then(
+        (result) => {
           setCurrentPairConvertation(result.conversion_rate.toFixed(2));
         },
       )
@@ -65,6 +84,7 @@ function App() {
         setCurrentValute={changeCurrentValute}
         setConvertedValute={changeConvertedValute}
         setCountValute={setCountValute}
+        convertValutes={convertValutes}
         setCurrentPairConvertation={setCurrentPairConvertation}
         allValutes={supportedCodes}
       />

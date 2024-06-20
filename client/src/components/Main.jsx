@@ -17,7 +17,7 @@ export default function Main(props) {
 
         <ConvertBox className={'current-convert-box'} setCountValute={props.setCountValute} currentValute={props.currentValute} setCurrentValute={props.setCurrentValute} allValutes={props.allValutes} />
 
-        <div className='line-between-currency'><SiConvertio className='convert-btn'/></div>
+        <div onClick={() => props.convertValutes(props.currentValute, props.convertedValute)} className='line-between-currency'><SiConvertio className='convert-btn'/></div>
 
         <div className="converted-amount-box">
           <p className='converted-amount-text'>Converted Amount</p>

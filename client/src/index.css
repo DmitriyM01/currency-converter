@@ -5,6 +5,12 @@
     padding: 0;
 } */
 
+.rrr {
+    background-color: red;
+    width: 10px;
+    height: 10px;
+}
+
 body {
     background-color: #fff;
     color: #222;
@@ -157,12 +163,39 @@ header .login-block {
 .currency {
     position: absolute;
     left: 10%;
+    width: 20%;
+    height: 40px;
+    background-color: #f4f4f4;
+    border-color: #f4f4f4;
+    font-size: 20px;
+    text-align: center;
+    color: #26278D;
+    font-weight: 600;
 }
 
 .count-money-box {
     position: absolute;
     right: 0;
     right: 10%;
+    background-color: #e1dede;
+    border: none;
+    border-radius: 0.7cap;
+    height: 40px;
+    width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.count-money {
+    background-color: #e1dede;
+    border: none;
+    border-radius: 0.7cap;
+    height: 40px;
+    max-width: 140px;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
 }
 
 .line-between-currency {
